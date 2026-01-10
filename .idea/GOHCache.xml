@@ -1,0 +1,333 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="GoORMHelperCache">
+    <option name="schemaMapping">
+      <map>
+        <entry key="Client">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/client.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ClientOptions">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Command">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/simplecli/cli.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Config">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/simpleconfig/config.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Context">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/simplecli/cli.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="CustomLogger">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/example/debug-only/main.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EmailAddress">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EmailAttachment">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EmailContent">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EmailMessage">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="EmailRecipients">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Error">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Flag">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/simplecli/cli.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="Formatter">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/cli/output/format.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="GlobalContext">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/internal/simplecli/cli.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="MessageBuilder">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/builder.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="ParsedConnectionString">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="SendResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="StatusResponse">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="WaitOptions">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/types.go" />
+            </set>
+          </value>
+        </entry>
+        <entry key="noOpLogger">
+          <value>
+            <set>
+              <option value="file://$PROJECT_DIR$/client.go" />
+            </set>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="scannedPathMapping">
+      <map>
+        <entry key="file://$PROJECT_DIR$/builder.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768078676740" />
+              <option name="schema">
+                <list>
+                  <option value="MessageBuilder" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/client.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678065" />
+              <option name="schema">
+                <list>
+                  <option value="Client" />
+                  <option value="noOpLogger" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/cmd/azemailsender-cli/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678065" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/example/attachment/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768078862200" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/example/debug-only/main.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077868286" />
+              <option name="schema">
+                <list>
+                  <option value="CustomLogger" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/cli/commands/config.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/cli/commands/send.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/cli/commands/status.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/cli/commands/version.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/cli/output/format.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+              <option name="schema">
+                <list>
+                  <option value="Formatter" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/simplecli/cli.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+              <option name="schema">
+                <list>
+                  <option value="Command" />
+                  <option value="Flag" />
+                  <option value="Context" />
+                  <option value="GlobalContext" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/internal/simpleconfig/config.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678066" />
+              <option name="schema">
+                <list>
+                  <option value="Config" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/send.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768077678067" />
+            </ScannedPath>
+          </value>
+        </entry>
+        <entry key="file://$PROJECT_DIR$/types.go">
+          <value>
+            <ScannedPath>
+              <option name="lastModified" value="1768078904881" />
+              <option name="schema">
+                <list>
+                  <option value="ClientOptions" />
+                  <option value="EmailAddress" />
+                  <option value="EmailContent" />
+                  <option value="EmailRecipients" />
+                  <option value="EmailAttachment" />
+                  <option value="EmailMessage" />
+                  <option value="SendResponse" />
+                  <option value="Error" />
+                  <option value="StatusResponse" />
+                  <option value="WaitOptions" />
+                  <option value="ParsedConnectionString" />
+                </list>
+              </option>
+            </ScannedPath>
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="tableStructMapping">
+      <map>
+        <entry key="client" value="Client" />
+        <entry key="client_options" value="ClientOptions" />
+        <entry key="command" value="Command" />
+        <entry key="config" value="Config" />
+        <entry key="context" value="Context" />
+        <entry key="custom_logger" value="CustomLogger" />
+        <entry key="email_address" value="EmailAddress" />
+        <entry key="email_attachment" value="EmailAttachment" />
+        <entry key="email_content" value="EmailContent" />
+        <entry key="email_message" value="EmailMessage" />
+        <entry key="email_recipients" value="EmailRecipients" />
+        <entry key="error" value="Error" />
+        <entry key="flag" value="Flag" />
+        <entry key="formatter" value="Formatter" />
+        <entry key="global_context" value="GlobalContext" />
+        <entry key="message_builder" value="MessageBuilder" />
+        <entry key="no_op_logger" value="noOpLogger" />
+        <entry key="parsed_connection_string" value="ParsedConnectionString" />
+        <entry key="send_response" value="SendResponse" />
+        <entry key="status_response" value="StatusResponse" />
+        <entry key="wait_options" value="WaitOptions" />
+      </map>
+    </option>
+    <option name="lastTimeChecked" value="1768077699112" />
+  </component>
+</project>

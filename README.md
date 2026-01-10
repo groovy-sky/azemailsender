@@ -149,6 +149,7 @@ message, err := client.NewMessage().
     ReplyTo("noreply@yourdomain.com").
     Subject("Complex Email").
     PlainText("Plain text version").
+	AddAttachment("/file/path").
     HTML(`
         <html>
             <body>
