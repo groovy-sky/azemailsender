@@ -7,6 +7,10 @@
 *.test
 *.out
 
+.idea
+.code
+.DS_Store
+
 # CLI build artifacts
 dist/
 azemailsender-cli
