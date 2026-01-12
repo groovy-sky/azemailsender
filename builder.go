@@ -1,8 +1,14 @@
 package azemailsender
 
 import (
+	"encoding/base64"
 	"fmt"
+	"log"
+	"os"
+	"path/filepath"
 	"strings"
+
+	"github.com/gabriel-vasile/mimetype"
 )
 
 // MessageBuilder provides a fluent interface for building email messages
@@ -16,7 +22,7 @@ func (c *Client) NewMessage() *MessageBuilder {
 	if c.options.Debug {
 		c.logger.Printf("[DEBUG] Creating new message builder")
 	}
-	
+
 	return &MessageBuilder{
 		client: c,
 		message: &EmailMessage{
@@ -35,8 +41,9 @@ func (b *MessageBuilder) From(address string) *MessageBuilder {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Setting sender address: %s", address)
 	}
-	
+
 	b.message.SenderAddress = address
+
 	return b
 }
 
@@ -46,7 +53,7 @@ func (b *MessageBuilder) To(address string, displayName ...string) *MessageBuild
 	if len(displayName) > 0 && displayName[0] != "" {
 		emailAddr.DisplayName = displayName[0]
 	}
-	
+
 	if b.client.options.Debug {
 		if emailAddr.DisplayName != "" {
 			b.client.logger.Printf("[DEBUG] Adding TO recipient: %s <%s>", emailAddr.DisplayName, emailAddr.Address)
@@ -54,8 +61,9 @@ func (b *MessageBuilder) To(address string, displayName ...string) *MessageBuild
 			b.client.logger.Printf("[DEBUG] Adding TO recipient: %s", emailAddr.Address)
 		}
 	}
-	
+
 	b.message.Recipients.To = append(b.message.Recipients.To, emailAddr)
+
 	return b
 }
 
@@ -65,7 +73,7 @@ func (b *MessageBuilder) Cc(address string, displayName ...string) *MessageBuild
 	if len(displayName) > 0 && displayName[0] != "" {
 		emailAddr.DisplayName = displayName[0]
 	}
-	
+
 	if b.client.options.Debug {
 		if emailAddr.DisplayName != "" {
 			b.client.logger.Printf("[DEBUG] Adding CC recipient: %s <%s>", emailAddr.DisplayName, emailAddr.Address)
@@ -73,8 +81,9 @@ func (b *MessageBuilder) Cc(address string, displayName ...string) *MessageBuild
 			b.client.logger.Printf("[DEBUG] Adding CC recipient: %s", emailAddr.Address)
 		}
 	}
-	
+
 	b.message.Recipients.Cc = append(b.message.Recipients.Cc, emailAddr)
+
 	return b
 }
 
@@ -84,7 +93,7 @@ func (b *MessageBuilder) Bcc(address string, displayName ...string) *MessageBuil
 	if len(displayName) > 0 && displayName[0] != "" {
 		emailAddr.DisplayName = displayName[0]
 	}
-	
+
 	if b.client.options.Debug {
 		if emailAddr.DisplayName != "" {
 			b.client.logger.Printf("[DEBUG] Adding BCC recipient: %s <%s>", emailAddr.DisplayName, emailAddr.Address)
@@ -92,8 +101,9 @@ func (b *MessageBuilder) Bcc(address string, displayName ...string) *MessageBuil
 			b.client.logger.Printf("[DEBUG] Adding BCC recipient: %s", emailAddr.Address)
 		}
 	}
-	
+
 	b.message.Recipients.Bcc = append(b.message.Recipients.Bcc, emailAddr)
+
 	return b
 }
 
@@ -103,7 +113,7 @@ func (b *MessageBuilder) ReplyTo(address string, displayName ...string) *Message
 	if len(displayName) > 0 && displayName[0] != "" {
 		emailAddr.DisplayName = displayName[0]
 	}
-	
+
 	if b.client.options.Debug {
 		if emailAddr.DisplayName != "" {
 			b.client.logger.Printf("[DEBUG] Adding ReplyTo address: %s <%s>", emailAddr.DisplayName, emailAddr.Address)
@@ -111,8 +121,9 @@ func (b *MessageBuilder) ReplyTo(address string, displayName ...string) *Message
 			b.client.logger.Printf("[DEBUG] Adding ReplyTo address: %s", emailAddr.Address)
 		}
 	}
-	
+
 	b.message.ReplyTo = append(b.message.ReplyTo, emailAddr)
+
 	return b
 }
 
@@ -121,8 +132,9 @@ func (b *MessageBuilder) Subject(subject string) *MessageBuilder {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Setting email subject: %s", subject)
 	}
-	
+
 	b.message.Content.Subject = subject
+
 	return b
 }
 
@@ -131,8 +143,9 @@ func (b *MessageBuilder) PlainText(content string) *MessageBuilder {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Setting plain text content (%d characters)", len(content))
 	}
-	
+
 	b.message.Content.PlainText = content
+
 	return b
 }
 
@@ -141,8 +154,9 @@ func (b *MessageBuilder) HTML(content string) *MessageBuilder {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Setting HTML content (%d characters)", len(content))
 	}
-	
+
 	b.message.Content.Html = content
+
 	return b
 }
 
@@ -151,7 +165,7 @@ func (b *MessageBuilder) AddMultipleRecipients(recipientType string, addresses [
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Adding %d recipients to %s field", len(addresses), recipientType)
 	}
-	
+
 	for _, addr := range addresses {
 		switch strings.ToLower(recipientType) {
 		case "to":
@@ -166,6 +180,31 @@ func (b *MessageBuilder) AddMultipleRecipients(recipientType string, addresses [
 			}
 		}
 	}
+
+	return b
+}
+
+func (b *MessageBuilder) AddAttachment(filePath string) *MessageBuilder {
+	mtype, err := mimetype.DetectFile(filePath)
+
+	if err != nil {
+		log.Panicln("Cant detect attachment mimetype:", err)
+	}
+
+	data, err := os.ReadFile(filePath)
+
+	if err != nil {
+		log.Panicln("Cant read attachment:", err)
+	}
+
+	attachment := EmailAttachment{
+		Name:        filepath.Base(filePath),
+		ContentType: mtype.String(),
+		Content:     base64.StdEncoding.EncodeToString(data),
+	}
+
+	b.message.Attachments = append(b.message.Attachments, attachment)
+
 	return b
 }
 
@@ -174,29 +213,29 @@ func (b *MessageBuilder) Validate() error {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Validating email message")
 	}
-	
+
 	var errors []string
-	
+
 	// Check sender address
 	if b.message.SenderAddress == "" {
 		errors = append(errors, "sender address is required")
 	}
-	
+
 	// Check subject
 	if b.message.Content.Subject == "" {
 		errors = append(errors, "subject is required")
 	}
-	
+
 	// Check content
 	if b.message.Content.PlainText == "" && b.message.Content.Html == "" {
 		errors = append(errors, "either plain text or HTML content is required")
 	}
-	
+
 	// Check recipients
 	if len(b.message.Recipients.To) == 0 && len(b.message.Recipients.Cc) == 0 && len(b.message.Recipients.Bcc) == 0 {
 		errors = append(errors, "at least one recipient is required")
 	}
-	
+
 	// Validate email addresses
 	allRecipients := append(append(b.message.Recipients.To, b.message.Recipients.Cc...), b.message.Recipients.Bcc...)
 	for _, recipient := range allRecipients {
@@ -204,12 +243,12 @@ func (b *MessageBuilder) Validate() error {
 			errors = append(errors, fmt.Sprintf("invalid email address: %s", recipient.Address))
 		}
 	}
-	
+
 	// Validate sender email
 	if !isValidEmail(b.message.SenderAddress) {
 		errors = append(errors, fmt.Sprintf("invalid sender email address: %s", b.message.SenderAddress))
 	}
-	
+
 	if len(errors) > 0 {
 		if b.client.options.Debug {
 			b.client.logger.Printf("[DEBUG] Validation failed with %d errors:", len(errors))
@@ -219,11 +258,11 @@ func (b *MessageBuilder) Validate() error {
 		}
 		return fmt.Errorf("validation failed: %s", strings.Join(errors, "; "))
 	}
-	
+
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Message validation successful")
 	}
-	
+
 	return nil
 }
 
@@ -232,11 +271,11 @@ func (b *MessageBuilder) Build() (*EmailMessage, error) {
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Building email message")
 	}
-	
+
 	if err := b.Validate(); err != nil {
 		return nil, err
 	}
-	
+
 	if b.client.options.Debug {
 		b.client.logger.Printf("[DEBUG] Message built successfully:")
 		b.client.logger.Printf("[DEBUG]   From: %s", b.message.SenderAddress)
@@ -246,8 +285,14 @@ func (b *MessageBuilder) Build() (*EmailMessage, error) {
 		b.client.logger.Printf("[DEBUG]   BCC recipients: %d", len(b.message.Recipients.Bcc))
 		b.client.logger.Printf("[DEBUG]   Has plain text: %t", b.message.Content.PlainText != "")
 		b.client.logger.Printf("[DEBUG]   Has HTML: %t", b.message.Content.Html != "")
+
+		if len(b.message.Attachments) > 0 {
+			for _, attachment := range b.message.Attachments {
+				b.client.logger.Printf("[DEBUG] Has Attachment: %s", attachment.Name)
+			}
+		}
 	}
-	
+
 	return b.message, nil
 }
 
@@ -258,18 +303,18 @@ func isValidEmail(email string) bool {
 	if len(parts) != 2 {
 		return false
 	}
-	
+
 	localPart := parts[0]
 	domainPart := parts[1]
-	
+
 	if len(localPart) == 0 || len(domainPart) == 0 {
 		return false
 	}
-	
+
 	// Domain must contain a dot
 	if !strings.Contains(domainPart, ".") {
 		return false
 	}
-	
+
 	return true
 }

@@ -6,7 +6,7 @@ import (
 )
 
 // DefaultAPIVersion is the default Azure Communication Services API version
-const DefaultAPIVersion = "2024-07-01-preview"
+const DefaultAPIVersion = "2025-09-01"
 
 // Logger interface for custom logging implementations
 type Logger interface {
@@ -66,12 +66,19 @@ type EmailRecipients struct {
 	Bcc []EmailAddress `json:"bcc,omitempty"`
 }
 
+type EmailAttachment struct {
+	Name        string `json:"name"`
+	ContentType string `json:"contentType"`
+	Content     string `json:"contentInBase64"`
+}
+
 // EmailMessage represents a complete email message ready to be sent
 type EmailMessage struct {
-	SenderAddress string          `json:"senderAddress"`
-	Content       EmailContent    `json:"content"`
-	Recipients    EmailRecipients `json:"recipients"`
-	ReplyTo       []EmailAddress  `json:"replyTo,omitempty"`
+	SenderAddress string            `json:"senderAddress"`
+	Content       EmailContent      `json:"content"`
+	Recipients    EmailRecipients   `json:"recipients"`
+	ReplyTo       []EmailAddress    `json:"replyTo,omitempty"`
+	Attachments   []EmailAttachment `json:"attachments,omitempty"`
 }
 
 // SendResponse represents the response from sending an email

@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"os"
+
 	"github.com/groovy-sky/azemailsender"
 )
 
@@ -14,13 +15,13 @@ type CustomLogger struct {
 
 func (l *CustomLogger) Printf(format string, v ...interface{}) {
 	// Add custom prefix and write to stderr for debug messages
-	fmt.Fprintf(os.Stderr, l.prefix+" "+format+"\n", v...)
+	_, _ = fmt.Fprintf(os.Stderr, l.prefix+" "+format+"\n", v...)
 }
 
 func main() {
 	// Create custom logger
 	customLogger := &CustomLogger{prefix: "[AZURE-EMAIL-DEBUG]"}
-	
+
 	// Create client with debug logging and custom logger
 	client := azemailsender.NewClient(
 		"https://<RESOURCE-NAME>.communication.azure.com",
@@ -55,7 +56,7 @@ func main() {
 			</html>
 		`).
 		Build()
-	
+
 	if err != nil {
 		log.Fatalf("Failed to build message: %v", err)
 	}
@@ -66,9 +67,9 @@ func main() {
 	if err != nil {
 		log.Fatalf("Email failed: %v", err)
 	}
-	
+
 	fmt.Printf("Email sent successfully! ID: %s\n", resp.ID)
-	
+
 	// Demonstrate status polling with custom callbacks
 	fmt.Println("Monitoring email status...")
 	waitOptions := &azemailsender.WaitOptions{
@@ -79,7 +80,7 @@ func main() {
 			fmt.Printf("Status check error: %v\n", err)
 		},
 	}
-	
+
 	finalStatus, err := client.WaitForCompletion(resp.ID, waitOptions)
 	if err != nil {
 		fmt.Printf("Status monitoring failed: %v\n", err)
