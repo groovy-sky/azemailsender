@@ -1,5 +1,7 @@
 # Azure Communication Services Email Go Library
 
+![](/logo.png)
+
 A comprehensive Go library for sending emails using Azure Communication Services Email API with extensive debug support and HMAC-SHA256 authentication.
 
 ## 🚀 Now with CLI Tool!
